@@ -79,3 +79,15 @@ A salary change accepts an explicit new amount and currency. It performs no exch
 Use current salaries in one selected currency and read the counts and salary figures from a single database snapshot. The initial currency is USD. Pending employees have no salary currency, so their count depends on department and country independently of the selected currency.
 
 For an even count, average the two middle amounts with integer arithmetic. Round a half minor unit up to the currency's supported precision and show a short note when rounding occurs. This keeps displayed amounts consistent with currency precision without floating-point error.
+
+## Hosted database setup and token lifetime
+
+Use the libSQL-compatible Turso engine in AWS AP South (Mumbai), matching the application's client and tested SQLite schema behavior. Keep schema setup and the initial 10,000-employee seed separate from builds and application startup. The hosted database survives application redeployments, and the seed marker preserves subsequent edits on retries.
+
+Use an expiring read/write database token, as requested during deployment setup. The selected lifetime is 90 days. Configure the token only in ignored local environment settings and the application's Vercel environment variables. Document its expiry and replacement procedure in the README so the demo remains accessible during review.
+
+The assessment demo uses the same synthetic database for Production and Preview. This keeps the small demo setup simple; preview changes can affect the same data. Separate databases would be appropriate for an independently used staging environment.
+
+## Repository and reviewer access
+
+Publish the project as the public GitHub repository acme-salary-management so reviewers can access the source and incremental history directly. Keep the HR demo password, session secret and database token out of the public repository. Provide reviewer credentials separately with the submission.

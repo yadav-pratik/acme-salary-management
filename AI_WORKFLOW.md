@@ -33,4 +33,6 @@ Review exposed issues that required corrections: a hidden table label caused hor
 
 ## Status and limits
 
-These notes describe the development work completed so far. Hosted database setup, deployment verification and the walkthrough video are still pending. Local checks do not establish that the hosted application works; deployment results should be added after they have been verified.
+The application is deployed on Vercel with 10,000 synthetic employees in Turso. Production browser checks verified login, employee creation/search and initial salary entry. When browser control became unavailable, authenticated HTTP requests and direct database reads verified saved salary/history, default and filtered pay summaries, and unauthenticated redirects. The temporary test employee and its history were removed afterward.
+
+A same-source production redeployment was also checked. SHA-256 fingerprints of all employee and salary-history rows matched before and after the redeployment, and fresh authenticated requests verified the public demo. See [deployment verification](DEPLOYMENT_VERIFICATION.md) for the scope and evidence. These checks demonstrate the exercised workflows; they are not a load test or an exhaustive security review. The walkthrough video is still pending.
