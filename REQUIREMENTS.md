@@ -9,7 +9,7 @@ Give ACME’s HR manager a web application for maintaining base salary records f
 | HR workflow | Acceptance criteria |
 | --- | --- |
 | Find an employee | Search by name or employee ID, filter by country or department, and browse paginated results across the full 10,000-employee dataset. |
-| Add and edit employees | Create employees with an employee ID, full name, department, and work country. HR can edit the name, department, and work country. The employee ID stays fixed. Enter salary and currency at creation or leave compensation pending and enter both later. Show **Salary pending** on the employee record until a salary is entered. |
+| Add and edit employees | Create employees with an employee ID, full name, department, and work country. HR can edit the name, department, and work country. The system generates a unique employee ID automatically and keeps it fixed. Enter salary and currency at creation or leave compensation pending and enter both later. Show **Salary pending** on the employee record until a salary is entered. |
 | Review and update salary | View and update the employee’s annual gross base salary. Show a dated history of the first salary entry and later updates, including the previous and new amounts when applicable. Salary changes take effect immediately on save. Save the current salary and history entry together. |
 | Answer pay questions | Select a currency and optionally filter by work country and department. Show the median, lowest, and highest salary and the count of employees included. Show a separate count of employees with pending salaries for the selected country and department. Show an empty state when there are no salaries to summarize. |
 

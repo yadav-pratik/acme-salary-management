@@ -2,7 +2,7 @@
 
 ## Employee records
 
-HR can add employees with an employee ID, full name, department, and work country. The ID stays fixed so HR has a stable way to identify a record as other details change. HR can edit the name, department, and work country.
+HR can add employees with an employee ID, full name, department, and work country. Generate employee IDs automatically in the format EMP-10001 and keep them fixed after creation. HR does not need to assign IDs manually, and the application must ensure generated IDs are unique. The fixed ID gives HR a stable way to identify a record as other details change. HR can edit the name, department, and work country.
 
 Salary and currency can be entered together at creation or later. This lets HR create a record before compensation details are available. The profile shows when salary is pending.
 
@@ -47,3 +47,17 @@ Use a signed, HTTP-only session cookie for the shared HR account. Sessions expir
 Use the simplified Stitch designs as the visual reference. Keep Login, Employees, Employee Profile and Pay Summary focused on their HR tasks, with plain labels, essential controls and clear error and empty states. The first generated designs were too busy, so remove decorative panels, compliance claims and unrelated features. Keep the same approach on mobile.
 
 Design reference https://stitch.google.com/projects/14686831510513642198
+
+## Database representation and integrity
+
+Use parameterized SQL through the libSQL TypeScript client for local SQLite and hosted libSQL Turso connections. The small schema remains readable without an ORM. Keep versioned schema setup separate from application startup.
+
+Store salary amounts as integer minor units with an explicit currency code and precision. Salary and currency must be provided together or both remain pending. This preserves exact values without floating-point storage.
+
+The database generates public employee IDs from an auto-incrementing internal key and prevents identity changes. Database triggers write initial salaries and later changes to salary_history in the same transaction as the employee record. This prevents a successful salary change without its history entry. Details-only edits and unchanged salaries do not add history.
+
+## Synthetic seed data
+
+Seed 10,000 employees deterministically across Engineering, Product, Sales, Finance, People and Operations, and the US, Germany, UK, India, Japan and Canada. Use each country's corresponding currency for the synthetic examples, and leave approximately 10% of salaries pending. These choices exercise the filters and currency precision, including JPY's whole-unit amounts.
+
+Seed in one transaction and store a completion marker. Reruns preserve HR edits, and failures leave no partial seed. Stop when an unmarked database already contains employees so existing records are preserved.
