@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { OrganizationFilters } from "@/components/organization-filters";
 import { formatSalary } from "@/lib/money";
 import { EmployeeForm } from "./employee-form";
 import type { Employee, EmployeeOptions, EmployeePage, ListFilters } from "./types";
@@ -49,20 +50,10 @@ export function EmployeeDirectory({ data, options, filters }: {
           <label htmlFor="employee-search">Search</label>
           <input id="employee-search" name="q" type="search" placeholder="Name or employee ID" maxLength={200} defaultValue={filters.query} />
         </div>
-        <div className="field">
-          <label htmlFor="department-filter">Department</label>
-          <select id="department-filter" name="department" defaultValue={filters.department}>
-            <option value="">All departments</option>
-            {options.departments.map(name => <option key={name} value={name}>{name}</option>)}
-          </select>
-        </div>
-        <div className="field">
-          <label htmlFor="country-filter">Work country</label>
-          <select id="country-filter" name="country" defaultValue={filters.country}>
-            <option value="">All countries</option>
-            {options.countries.map(country => <option key={country.code} value={country.code}>{country.name}</option>)}
-          </select>
-        </div>
+        <OrganizationFilters
+          departments={options.departments} countries={options.countries}
+          department={filters.department} country={filters.country} idPrefix="directory"
+        />
         <Button type="submit" variant="quiet" className="filter-apply">Apply filters</Button>
         {(filters.query || filters.country || filters.department) && <Link className="clear-link" href="/employees">Clear filters</Link>}
       </form>

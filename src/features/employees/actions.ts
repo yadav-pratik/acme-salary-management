@@ -36,6 +36,7 @@ export async function saveEmployee(form: FormData): Promise<EmployeeFormState> {
   }
 
   revalidatePath("/employees");
+  revalidatePath("/pay-summary");
   revalidatePath(`/employees/${employeeId}`);
   return { errors: {}, message: creating ? `Employee ${employeeId} added.` : `Employee ${employeeId} updated.`, success: true };
 }

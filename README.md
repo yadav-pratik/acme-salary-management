@@ -31,7 +31,7 @@ npm start
 
 ## Current stage
 
-Login, shared navigation, the relational schema and repeatable demo seed are implemented. The Employees screen supports server-side search, country/department filters, pagination, and employee creation and detail editing. Employee profiles support details editing, salary entry/updates and dated history. Pay Summary is the next increment.
+Login, shared navigation, the relational schema and repeatable demo seed are implemented. The Employees screen supports server-side search, country/department filters, pagination, and employee creation and detail editing. Employee profiles support details editing, salary entry/updates and dated history. Pay Summary provides filtered salary figures and pending-salary counts.
 ## Demo login configuration
 
 Copy .env.example to .env.local and set DEMO_USERNAME, DEMO_PASSWORD and SESSION_SECRET. Use a random secret of at least 32 characters. Restart the development server after changing these values. A local .env.local has already been generated on the development computer. Open it locally to view or edit the demo credentials.
@@ -45,7 +45,7 @@ The session cookie is HTTP-only, uses SameSite=Lax and expires after eight hours
 - src/components contains reusable controls and navigation.
 - src/lib/auth contains server configuration and session validation, with unit tests beside the session rules.
 - src/lib/db contains the database client, schema, reference data and deterministic seed generator.
-- scripts contains database setup and seed commands. src/features/employees contains employee forms, queries, validation and authenticated save actions. src/features/salaries contains profile queries, salary validation, updates and history. The pay-summary feature will be added with its screen.
+- scripts contains database setup and seed commands. src/features/employees contains employee forms, queries, validation and authenticated save actions. src/features/salaries contains profile queries, salary validation, updates and history. src/features/pay-summary contains summary queries and filter validation.
 
 ## Database setup and demo data
 
@@ -75,3 +75,11 @@ Each opened Add employee form has a unique request token. A retried submission r
 Open an employee name in the directory to view their profile. HR can edit details, add a pending salary, or update an existing annual gross base salary. Salary history displays the first entry and subsequent changes, with explicit currencies and UTC timestamps. History is paginated in groups of 20.
 
 Salary forms validate exact amounts using the selected currency's precision. Each change applies immediately. A stale form returns a conflict message and refreshes the profile data so HR can close and reopen the form to review the newer salary. Saving unchanged pay or retrying an already-applied update adds no duplicate history.
+
+## Pay Summary
+
+Select a currency, with optional department and work country filters. The page shows the included employee count and median, lowest and highest current annual gross base salary. It defaults to USD. Filters are stored in the URL and invalid selections produce field errors.
+
+Pending salaries are excluded from calculations. Their count follows department and country filters independently of the currency selector. A scope with no matching salaries displays zero included employees, dashes for salary figures and an empty-state message while retaining the pending count.
+
+For an even employee count, the median averages the two middle salaries using exact integer arithmetic. A half minor unit rounds up to the currency's supported precision, with a rounding note shown when needed. Summary counts and salary figures are read from one database snapshot.

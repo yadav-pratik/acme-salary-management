@@ -73,3 +73,9 @@ Keep details-only updates separate from salary updates, including at the databas
 Use the latest salary-history entry as the revision when an HR manager opens a salary form. Check that revision inside a write transaction before changing pay, so an older form cannot overwrite a newer salary. Saving the current amount/currency again succeeds without adding duplicate history, which also handles a retried successful request.
 
 A salary change accepts an explicit new amount and currency. It performs no exchange-rate conversion. History retains each previous and new currency, and the UI labels its timestamps as UTC so records remain unambiguous across countries.
+
+## Pay summary calculation
+
+Use current salaries in one selected currency and read the counts and salary figures from a single database snapshot. The initial currency is USD. Pending employees have no salary currency, so their count depends on department and country independently of the selected currency.
+
+For an even count, average the two middle amounts with integer arithmetic. Round a half minor unit up to the currency's supported precision and show a short note when rounding occurs. This keeps displayed amounts consistent with currency precision without floating-point error.
