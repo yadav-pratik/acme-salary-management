@@ -33,3 +33,17 @@ Use SQLite for local development and a SQLite-compatible Turso database for the 
 Deploy the Next.js application on Vercel Hobby and the database on Turso Free. This combination fits the personal assessment demo and provides a free deployment within each service's usage limits. Turso stores employee records and salary history separately from the application, so data survives app restarts and redeploys.
 
 Connect to Turso from server-side code using environment variables for the database URL and authentication token. Keep credentials out of Git. The deployed database uses hosted storage, so the application does not need a persistent local disk.
+
+## Code organization
+
+Use src/app for routes and screen composition, src/features for feature-specific forms and behavior, src/components for shared controls and navigation, and src/lib for server infrastructure such as authentication and database access. Add feature folders as their code is introduced. Keep business-rule tests beside the code they verify. Database setup and seeding scripts will live in scripts. This gives each feature a clear home as the app grows and keeps shared controls reusable.
+
+## Demo sessions
+
+Use a signed, HTTP-only session cookie for the shared HR account. Sessions expire after eight hours. Configure the username, password and a session secret through server-side environment variables. Changing credentials or the secret invalidates existing sessions. Check access in protected pages and future data operations as well as the shared layout. Signed cookies support the single configured demo account without a user database. An eight-hour lifetime lets reviewers complete a session while requiring periodic sign-in.
+
+## UI design
+
+Use the simplified Stitch designs as the visual reference. Keep Login, Employees, Employee Profile and Pay Summary focused on their HR tasks, with plain labels, essential controls and clear error and empty states. The first generated designs were too busy, so remove decorative panels, compliance claims and unrelated features. Keep the same approach on mobile.
+
+Design reference https://stitch.google.com/projects/14686831510513642198
