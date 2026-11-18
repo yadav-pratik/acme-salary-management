@@ -1,6 +1,6 @@
 # ACME Salary Management
 
-An HR application for employee records, salary updates and history, and basic pay summaries. Scope is recorded in REQUIREMENTS.md and choices in decisions.md.
+An HR application for employee records, salary updates and history, and basic pay summaries. See [requirements](REQUIREMENTS.md), [design decisions](decisions.md) and [AI workflow notes](AI_WORKFLOW.md) for scope, rationale and how AI contributions were checked.
 
 ## Local setup
 
