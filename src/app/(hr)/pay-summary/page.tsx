@@ -48,7 +48,7 @@ export default async function PaySummaryPage({ searchParams }: {
           department={filters.department} country={filters.country} idPrefix="summary"
           errors={errors}
         />
-        <Button type="submit" className="filter-apply">Apply filters</Button>
+        <Button type="submit" variant="quiet" className="filter-apply">Apply filters</Button>
         <Link className="clear-link" href="/pay-summary">Reset</Link>
       </form>
       {summary ? (

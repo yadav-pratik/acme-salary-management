@@ -41,7 +41,7 @@ export function EmployeeForm({ employee, options, onClose, onSaved }: {
 
   return (
     <Dialog title={employee ? "Edit employee details" : "Add employee"} busy={pending} onClose={onClose}>
-      <form action={action} noValidate aria-busy={pending} className="employee-form">
+      <form action={action} noValidate onReset={event => event.preventDefault()} aria-busy={pending} className="employee-form">
         {employee
           ? <input type="hidden" name="id" value={employee.id} />
           : <input type="hidden" name="creationToken" value={creationToken} />}

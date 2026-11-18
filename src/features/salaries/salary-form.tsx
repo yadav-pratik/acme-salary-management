@@ -28,7 +28,7 @@ export function SalaryForm({ employee, revision, currencies, onClose, onSaved }:
 
   return (
     <Dialog title={employee.salaryMinor === null ? "Add salary" : "Update salary"} busy={pending} onClose={onClose}>
-      <form action={action} className="employee-form" noValidate aria-busy={pending}>
+      <form action={action} className="employee-form" noValidate onReset={event => event.preventDefault()} aria-busy={pending}>
         <input type="hidden" name="id" value={employee.id} />
         <input type="hidden" name="revision" value={expectedRevision} />
         <fieldset disabled={pending}>
