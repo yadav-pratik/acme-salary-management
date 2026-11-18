@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatSalary, parseSalaryMinor } from "./money";
+import { formatSalary, parseSalaryMinor, salaryInputValue } from "./money";
 
 describe("salary amounts", () => {
   it("parses decimal strings exactly according to currency precision", () => {
@@ -21,4 +21,10 @@ describe("salary amounts", () => {
     expect(formatSalary(8500000, "JPY", 0)).toBe("JPY 8,500,000");
     expect(formatSalary(Number.MAX_SAFE_INTEGER, "EUR", 2)).toBe("EUR 90,071,992,547,409.91");
   });
+});
+
+it("prefills salary inputs without grouping or losing decimal precision", () => {
+  expect(salaryInputValue(12000029, 2)).toBe("120000.29");
+  expect(salaryInputValue(8500000, 0)).toBe("8500000");
+  expect(parseSalaryMinor(salaryInputValue(Number.MAX_SAFE_INTEGER, 2), 2)).toBe(Number.MAX_SAFE_INTEGER);
 });

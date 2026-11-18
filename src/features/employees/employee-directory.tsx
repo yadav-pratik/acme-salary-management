@@ -84,7 +84,7 @@ export function EmployeeDirectory({ data, options, filters }: {
               {data.employees.map(employee => (
                 <tr key={employee.id}>
                   <td className="employee-id">{employee.employeeId}</td>
-                  <td className="employee-name">{employee.fullName}</td>
+                  <td className="employee-name"><Link className="employee-profile-link" href={`/employees/${employee.employeeId}`}>{employee.fullName}</Link></td>
                   <td>{employee.department}</td>
                   <td>{employee.countryName}</td>
                   <td className="salary-column">

@@ -1,5 +1,31 @@
-import type { Client } from "@libsql/client";
-import type { EmployeeOptions, EmployeePage, EmployeeValues, ListFilters } from "./types";
+import type { Client, Row } from "@libsql/client";
+import type { Employee, EmployeeOptions, EmployeePage, EmployeeValues, ListFilters } from "./types";
+
+function readEmployee(row: Row): Employee {
+  return {
+    id: Number(row.id),
+    employeeId: String(row.employee_id),
+    fullName: String(row.full_name),
+    department: String(row.department),
+    countryCode: String(row.country_code),
+    countryName: String(row.country_name),
+    salaryMinor: row.salary_minor === null ? null : Number(row.salary_minor),
+    currencyCode: row.currency_code === null ? null : String(row.currency_code),
+    minorUnits: row.minor_units === null ? null : Number(row.minor_units),
+  };
+}
+
+export async function getEmployee(client: Pick<Client, "execute">, employeeId: string) {
+  const result = await client.execute({
+    sql: `SELECT e.*, c.name AS country_name, m.minor_units
+      FROM employees e
+      JOIN countries c ON c.code = e.country_code
+      LEFT JOIN currencies m ON m.code = e.currency_code
+      WHERE e.employee_id = ?`,
+    args: [employeeId],
+  });
+  return result.rows.length ? readEmployee(result.rows[0]) : null;
+}
 
 export async function getEmployeeOptions(client: Client): Promise<EmployeeOptions> {
   const [departments, countries, currencies] = await client.batch([
@@ -51,17 +77,7 @@ export async function listEmployees(client: Client, filters: ListFilters): Promi
     });
     return {
       total, page, pageCount, pageSize,
-      employees: result.rows.map(row => ({
-        id: Number(row.id),
-        employeeId: String(row.employee_id),
-        fullName: String(row.full_name),
-        department: String(row.department),
-        countryCode: String(row.country_code),
-        countryName: String(row.country_name),
-        salaryMinor: row.salary_minor === null ? null : Number(row.salary_minor),
-        currencyCode: row.currency_code === null ? null : String(row.currency_code),
-        minorUnits: row.minor_units === null ? null : Number(row.minor_units),
-      })),
+      employees: result.rows.map(readEmployee),
     };
   } finally {
     transaction.close();

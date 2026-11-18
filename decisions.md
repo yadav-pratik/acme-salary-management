@@ -67,3 +67,9 @@ Seed in one transaction and store a completion marker. Reruns preserve HR edits,
 Run employee search, combined filters and pagination in the database, returning 25 rows at a time. Keep filters and page selection in the URL so navigation and refresh preserve the view. Read the page count and rows in one snapshot so they stay consistent during concurrent changes.
 
 Keep details-only updates separate from salary updates, including at the database write boundary. A form-specific creation token makes repeated Add employee submissions return the same employee. Add this through a versioned migration so existing seeded records keep their IDs and history.
+
+## Salary update concurrency
+
+Use the latest salary-history entry as the revision when an HR manager opens a salary form. Check that revision inside a write transaction before changing pay, so an older form cannot overwrite a newer salary. Saving the current amount/currency again succeeds without adding duplicate history, which also handles a retried successful request.
+
+A salary change accepts an explicit new amount and currency. It performs no exchange-rate conversion. History retains each previous and new currency, and the UI labels its timestamps as UTC so records remain unambiguous across countries.

@@ -31,7 +31,7 @@ npm start
 
 ## Current stage
 
-Login, shared navigation, the relational schema and repeatable demo seed are implemented. The Employees screen supports server-side search, country/department filters, pagination, and employee creation and detail editing. Employee profiles, salary updates and Pay Summary are the next increments.
+Login, shared navigation, the relational schema and repeatable demo seed are implemented. The Employees screen supports server-side search, country/department filters, pagination, and employee creation and detail editing. Employee profiles support details editing, salary entry/updates and dated history. Pay Summary is the next increment.
 ## Demo login configuration
 
 Copy .env.example to .env.local and set DEMO_USERNAME, DEMO_PASSWORD and SESSION_SECRET. Use a random secret of at least 32 characters. Restart the development server after changing these values. A local .env.local has already been generated on the development computer. Open it locally to view or edit the demo credentials.
@@ -45,7 +45,7 @@ The session cookie is HTTP-only, uses SameSite=Lax and expires after eight hours
 - src/components contains reusable controls and navigation.
 - src/lib/auth contains server configuration and session validation, with unit tests beside the session rules.
 - src/lib/db contains the database client, schema, reference data and deterministic seed generator.
-- scripts contains database setup and seed commands. src/features/employees contains employee forms, queries, validation and authenticated save actions. Salary and pay-summary feature folders will be added with their screens.
+- scripts contains database setup and seed commands. src/features/employees contains employee forms, queries, validation and authenticated save actions. src/features/salaries contains profile queries, salary validation, updates and history. The pay-summary feature will be added with its screen.
 
 ## Database setup and demo data
 
@@ -69,3 +69,9 @@ After pulling schema changes, run npm run db:setup before starting the app. Setu
 The Employees screen retrieves 25 records at a time, with filters and pagination carried in the URL. Name/ID search treats wildcard characters as literal text. Employee forms validate required details and salary/currency pairs on the server. New records can leave salary pending; details-only editing preserves compensation.
 
 Each opened Add employee form has a unique request token. A retried submission returns the already saved employee instead of inserting a duplicate. The second schema migration adds this token without changing existing employee IDs or salary history.
+
+## Employee profiles and salary changes
+
+Open an employee name in the directory to view their profile. HR can edit details, add a pending salary, or update an existing annual gross base salary. Salary history displays the first entry and subsequent changes, with explicit currencies and UTC timestamps. History is paginated in groups of 20.
+
+Salary forms validate exact amounts using the selected currency's precision. Each change applies immediately. A stale form returns a conflict message and refreshes the profile data so HR can close and reopen the form to review the newer salary. Saving unchanged pay or retrying an already-applied update adds no duplicate history.

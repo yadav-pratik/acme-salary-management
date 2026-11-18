@@ -15,3 +15,10 @@ export function formatSalary(amountMinor: number, currency: string, minorUnits: 
   const fraction = minorUnits > 0 ? "." + (value % factor).toString().padStart(minorUnits, "0") : "";
   return `${currency} ${whole}${fraction}`;
 }
+
+export function salaryInputValue(amountMinor: number, minorUnits: number) {
+  const value = BigInt(amountMinor);
+  const factor = 10n ** BigInt(minorUnits);
+  const fraction = minorUnits > 0 ? "." + (value % factor).toString().padStart(minorUnits, "0") : "";
+  return (value / factor).toString() + fraction;
+}
