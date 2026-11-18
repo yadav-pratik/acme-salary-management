@@ -91,6 +91,14 @@ const schema: InStatement[] = [
   })),
 ];
 
+const migrations: InStatement[][] = [
+  schema,
+  [
+    "ALTER TABLE employees ADD COLUMN creation_token TEXT",
+    "CREATE UNIQUE INDEX employees_creation_token ON employees(creation_token)",
+  ],
+];
+
 export async function applySchema(client: Client) {
   await client.execute(`CREATE TABLE IF NOT EXISTS schema_migrations (
     version INTEGER PRIMARY KEY,
@@ -99,16 +107,16 @@ export async function applySchema(client: Client) {
   const transaction = await client.transaction("write");
   try {
     const applied = await transaction.execute("SELECT version FROM schema_migrations ORDER BY version");
-    if (applied.rows.length > 0) {
-      if (applied.rows.length !== 1 || applied.rows[0].version !== 1) {
-        throw new Error("Database schema version is not supported by this application.");
-      }
-      return;
+    if (applied.rows.length > migrations.length
+      || applied.rows.some((row, index) => row.version !== index + 1)) {
+      throw new Error("Database schema version is not supported by this application.");
     }
-    await transaction.batch([
-      ...schema,
-      { sql: "INSERT INTO schema_migrations (version) VALUES (?)", args: [1] },
-    ]);
+    for (let index = applied.rows.length; index < migrations.length; index++) {
+      await transaction.batch([
+        ...migrations[index],
+        { sql: "INSERT INTO schema_migrations (version) VALUES (?)", args: [index + 1] },
+      ]);
+    }
     await transaction.commit();
   } finally {
     transaction.close();

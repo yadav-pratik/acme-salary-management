@@ -120,3 +120,79 @@ h1 { margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -.6px; }
   .navigation a { flex: 1; text-align: center; }
   .page-content { padding: 28px 20px; }
 }
+
+.field select {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 32px 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: white;
+  color: var(--ink);
+}
+
+input[readonly] { background: #f8fafc; color: var(--muted); }
+input[aria-invalid="true"], select[aria-invalid="true"] { border-color: #b42318; }
+.page-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
+.employee-filters { display: flex; flex-wrap: wrap; align-items: end; gap: 16px; margin-bottom: 24px; }
+.filter-search { flex: 1; min-width: 230px; }
+.employee-filters select { min-width: 160px; }
+.filter-apply { border-color: var(--border); background: white; }
+.clear-link { padding: 12px 0; color: var(--accent); font-size: 14px; }
+.result-count { margin-bottom: 12px; color: var(--muted); font-size: 13px; }
+.table-container { overflow-x: auto; background: white; border: 1px solid #e2e8f0; border-radius: 8px; }
+.employee-table { width: 100%; min-width: 960px; border-collapse: collapse; font-size: 14px; }
+.employee-table th { text-align: left; background: #f8fafc; color: var(--muted); font-size: 12px; font-weight: 500; }
+.employee-table th, .employee-table td { padding: 14px 16px; border-bottom: 1px solid #edf0f5; white-space: nowrap; }
+.employee-table tr:last-child td { border-bottom: 0; }
+.employee-table tbody tr:hover { background: #fcfdff; }
+.employee-table .salary-column { text-align: right; font-variant-numeric: tabular-nums; }
+.employee-id { color: var(--muted); font-size: 13px; }
+.employee-name { font-weight: 500; }
+.pending-salary { display: inline-block; padding: 3px 8px; background: #fff8e8; color: #875a08; border-radius: 4px; font-size: 12px; }
+.employee-table .button { min-height: 36px; padding: 6px 10px; color: var(--accent); }
+.pagination { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 20px; color: var(--muted); font-size: 13px; }
+.pagination > div { display: flex; gap: 8px; }
+.pagination a { text-decoration: none; }
+.pagination button:disabled { cursor: default; }
+.empty-state { padding: 64px 24px; text-align: center; background: white; border: 1px solid #e2e8f0; border-radius: 8px; }
+.empty-state p { margin: 0 0 12px; }
+.empty-state a { color: var(--accent); }
+.success-message { margin: -8px 0 24px; color: #186343; font-size: 14px; }
+.muted { color: var(--muted); font-size: 13px; margin: 0; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+.form-dialog {
+  position: fixed;
+  inset: 0 0 0 auto;
+  margin: 0;
+  width: min(100%, 480px);
+  height: 100dvh;
+  max-height: 100dvh;
+  max-width: 100vw;
+  border: 0;
+  border-left: 1px solid var(--border);
+  padding: 0;
+  color: var(--ink);
+  background: white;
+  overflow-y: auto;
+}
+
+.form-dialog::backdrop { background: #17203366; }
+.dialog-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid #e2e8f0; }
+.dialog-header h2 { margin: 0; font-size: 19px; font-weight: 600; letter-spacing: -.3px; }
+.dialog-header button { font-size: 24px; padding: 4px 12px; }
+.employee-form { padding: 24px; display: grid; gap: 20px; }
+.employee-form fieldset { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 20px; }
+.salary-fields { display: grid; gap: 16px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 12px; padding-top: 8px; }
+
+@media (max-width: 600px) {
+  .page-heading { margin-bottom: 24px; }
+  .employee-filters { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .filter-search { grid-column: 1 / -1; min-width: 0; }
+  .employee-filters select { min-width: 0; }
+  .filter-apply { width: 100%; }
+  .clear-link { text-align: center; }
+  .pagination { gap: 8px; }
+}

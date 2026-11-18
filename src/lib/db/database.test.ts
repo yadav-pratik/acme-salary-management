@@ -80,7 +80,7 @@ describe("employee and salary data integrity", () => {
     await addEmployee();
     await applySchema(client);
     expect((await client.execute("SELECT COUNT(*) AS count FROM employees")).rows[0].count).toBe(1);
-    expect((await client.execute("SELECT COUNT(*) AS count FROM schema_migrations")).rows[0].count).toBe(1);
+    expect((await client.execute("SELECT COUNT(*) AS count FROM schema_migrations")).rows[0].count).toBe(2);
   });
 });
 

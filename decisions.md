@@ -61,3 +61,9 @@ The database generates public employee IDs from an auto-incrementing internal ke
 Seed 10,000 employees deterministically across Engineering, Product, Sales, Finance, People and Operations, and the US, Germany, UK, India, Japan and Canada. Use each country's corresponding currency for the synthetic examples, and leave approximately 10% of salaries pending. These choices exercise the filters and currency precision, including JPY's whole-unit amounts.
 
 Seed in one transaction and store a completion marker. Reruns preserve HR edits, and failures leave no partial seed. Stop when an unmarked database already contains employees so existing records are preserved.
+
+## Employee browsing and saves
+
+Run employee search, combined filters and pagination in the database, returning 25 rows at a time. Keep filters and page selection in the URL so navigation and refresh preserve the view. Read the page count and rows in one snapshot so they stay consistent during concurrent changes.
+
+Keep details-only updates separate from salary updates, including at the database write boundary. A form-specific creation token makes repeated Add employee submissions return the same employee. Add this through a versioned migration so existing seeded records keep their IDs and history.
