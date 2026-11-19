@@ -56,4 +56,4 @@ This verifies that the hosted records remained unchanged across the application 
 
 These are targeted production checks, rather than a load test, backup-restoration test or exhaustive security review. Full employee editing and later salary-change workflows were exercised locally before deployment; the initial production browser check covered creation and first salary entry. The latest implementation checks passed 46 automated tests, lint, TypeScript checking and a production build. Documentation changes do not change runtime behavior.
 
-The walkthrough video remains to be recorded and linked before submission. The HR password and database credentials are intentionally absent from this public report.
+The candidate recorded a [walkthrough video](https://drive.google.com/file/d/1HX7QWoSdIsqUgF3EwVT7RcCV8URheYIE/view?usp=sharing) for the submission. The HR password and database credentials are intentionally absent from this public report.

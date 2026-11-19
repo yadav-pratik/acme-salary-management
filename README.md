@@ -9,7 +9,7 @@ An HR application for employee records, salary updates and history, and basic pa
 - Demo username: `hr.demo`. Obtain the password from the submission owner; credentials are kept out of this public repository.
 - The hosted database contains synthetic data. The initial seed has 10,000 employees, including 1,028 with pending salaries. Counts can change when reviewers add or update records.
 - [Deployment verification](DEPLOYMENT_VERIFICATION.md) records production checks and the successful persistence check across a redeployment.
-- The walkthrough video is pending.
+- [Watch the walkthrough video](https://drive.google.com/file/d/1HX7QWoSdIsqUgF3EwVT7RcCV8URheYIE/view?usp=sharing).
 
 ## Local setup
 
