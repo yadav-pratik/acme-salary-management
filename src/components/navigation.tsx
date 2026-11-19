@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "@/features/auth/actions";
+import { BrandMark } from "./brand-mark";
 import { Button } from "./ui/button";
 
 const links = [
@@ -15,7 +16,10 @@ export function Navigation() {
 
   return (
     <header className="app-header">
-      <Link href="/employees" className="brand">ACME <span>Salary Management</span></Link>
+      <Link href="/employees" className="brand">
+        <BrandMark />
+        <span className="brand-copy"><strong>ACME</strong><span>Salary Management</span></span>
+      </Link>
       <nav aria-label="Main navigation" className="navigation">
         {links.map(({ href, label }) => (
           <Link

@@ -42,6 +42,9 @@ h1 { margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -.6px; }
   border-radius: 12px;
 }
 
+.brand-mark { display: block; width: 40px; height: 40px; flex-shrink: 0; color: var(--accent); }
+.login-card .brand-mark { width: 48px; height: 48px; margin: 0 auto 16px; }
+
 .login-card h1 {
   margin-bottom: 32px;
   font-size: 22px;
@@ -105,8 +108,10 @@ h1 { margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -.6px; }
   border-bottom: 1px solid #e2e8f0;
 }
 
-.brand { text-decoration: none; font-size: 17px; font-weight: 650; white-space: nowrap; }
-.brand span { display: block; color: var(--muted); font-size: 12px; font-weight: 400; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-size: 17px; font-weight: 650; white-space: nowrap; }
+.brand-copy { display: grid; }
+.brand-copy strong { font-weight: inherit; }
+.brand-copy > span { display: block; color: var(--muted); font-size: 12px; font-weight: 400; }
 .navigation { display: flex; gap: 8px; }
 .navigation a { padding: 10px 14px; border-radius: 6px; text-decoration: none; font-size: 14px; color: var(--muted); }
 .navigation a[aria-current="page"] { background: #eff4ff; color: var(--accent); font-weight: 500; }
